@@ -62,26 +62,3 @@ python main.py
 ```bash
 python main.py --limit 5
 ```
-
-## Jupyter Kernel Setup
-
-The project is configured to use the created virtual environment as a Jupyter kernel.
-
-1.  **Install the kernel:**
-    Make sure your virtual environment is activated (`source .venv/bin/activate`) and run:
-    ```bash
-    python -m ipykernel install --user --name=mbl-auditor --display-name="MBL Auditor (.venv)"
-    ```
-
-2.  **Using the kernel in VS Code:**
-    *   Open a Jupyter notebook (`.ipynb`).
-    *   Click the kernel selector in the top-right corner.
-    *   Select "MBL Auditor (.venv)" from the list of available kernels.
-
-## Package Management
-
-This project uses `uv`. To add a new dependency, activate your virtual environment and run:
-```bash
-uv pip install <package-name>
-```
-This will install the package and add it to your `pyproject.toml` file.

@@ -13,6 +13,20 @@ BASE_URL = "https://dadosabertos.camara.leg.br/api/v2"
 # Number of months of expense history to download for each deputy.
 MONTHS_OF_HISTORY = 12 
 
+# --- Auditor & Reporter Configuration ---
+
+# The score above which an expense is considered "critical" for reporting.
+SCORE_THRESHOLD = 5
+
+# Weights for each flag when calculating the fraud score.
+FLAG_WEIGHTS = {
+    "flag_transacao_duplicada": 4,
+    "flag_valor_atipico": 3,
+    "flag_valor_redondo": 2,
+    "flag_valor_alto_percentil": 2,
+    "flag_fim_de_semana": 1,
+}
+
 # Project root directory
 # Assuming this file is in src/
 ROOT_DIR = Path(__file__).parent.parent
