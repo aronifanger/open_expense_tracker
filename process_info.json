@@ -1,0 +1,5 @@
+{
+    "pid": 781676,
+    "status": "running",
+    "command": "python main.py --date 2025-07-16 --period di\u00e1rio --limit 511"
+}
