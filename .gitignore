@@ -12,3 +12,4 @@ wheels/
 data/
 reports/
 uv.lock
+pipeline.log
