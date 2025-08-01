@@ -11,7 +11,7 @@ from pathlib import Path
 BASE_URL = "https://dadosabertos.camara.leg.br/api/v2"
 
 # Number of months of expense history to download for each deputy.
-MONTHS_OF_HISTORY = 12 
+MONTHS_OF_HISTORY = 12
 
 # --- Auditor & Reporter Configuration ---
 
@@ -36,6 +36,7 @@ DATA_DIR = ROOT_DIR / "data"
 RAW_DATA_DIR = DATA_DIR / "raw"
 PROCESSED_DATA_DIR = DATA_DIR / "processed"
 REPORTS_DIR = ROOT_DIR / "reports"
+SUMMARY_FILE = RAW_DATA_DIR / "download_summary.json"
 
 # Ensure all data directories exist
 RAW_DATA_DIR.mkdir(parents=True, exist_ok=True)

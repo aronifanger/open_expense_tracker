@@ -10,8 +10,6 @@ import logging
 from pathlib import Path
 from src import config
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
 # --- Data Loading and Preparation ---
 
 def _load_raw_deputy_expenses(deputy_id: int) -> pd.DataFrame:
@@ -26,7 +24,7 @@ def _load_raw_deputy_expenses(deputy_id: int) -> pd.DataFrame:
         all_months_df.append(pd.read_csv(csv_file))
 
     if not all_months_df:
-        logging.warning(f"No expense files found for deputy {depy_id}.")
+        logging.warning(f"No expense files found for deputy {deputy_id}.")
         return pd.DataFrame()
 
     return pd.concat(all_months_df, ignore_index=True)
@@ -105,21 +103,20 @@ def run_deputy_audit(deputy_id: int):
     """
     Loads, processes, and saves the audited expense data for a single deputy.
     """
-    logging.info(f"Starting audit for deputy ID: {deputy_id}")
+    logging.info(f"Running audit for deputy ID: {deputy_id}")
     
     raw_df = _load_raw_deputy_expenses(deputy_id)
     if raw_df.empty:
-        logging.info(f"Skipping audit for deputy {deputy_id} due to no data.")
+        logging.warning(f"Skipping audit for deputy {deputy_id} due to no raw data.")
         return
         
     df = _prepare_expense_data(raw_df)
     if df.empty:
-        logging.info(f"Skipping audit for deputy {deputy_id} after data preparation.")
+        logging.warning(f"Skipping audit for deputy {deputy_id} after data preparation (no valid data).")
         return
     
     flag_names = list(FLAG_FUNCTIONS.keys())
     for flag_name, flag_func in FLAG_FUNCTIONS.items():
-        logging.info(f"Applying flag: {flag_name}")
         df[flag_name] = flag_func(df)
 
     df_with_scores = calculate_fraud_score(df)
@@ -138,7 +135,6 @@ def run_deputy_audit(deputy_id: int):
     processed_dir.mkdir(parents=True, exist_ok=True)
     output_path = processed_dir / "flagged_expenses.csv"
     
-    logging.info(f"Saving {len(final_df)} flagged transactions to {output_path}")
     final_df.to_csv(output_path, index=False)
     
-    logging.info(f"Finished audit for deputy ID: {deputy_id}")
+    logging.info(f"Finished audit for deputy ID: {deputy_id}, found {len(final_df)} flagged expenses.")
